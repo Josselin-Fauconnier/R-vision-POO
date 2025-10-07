@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : lun. 06 oct. 2025 à 14:36
+-- Généré le : mar. 07 oct. 2025 à 12:07
 -- Version du serveur : 8.4.3
 -- Version de PHP : 8.3.16
 
@@ -72,7 +72,10 @@ INSERT INTO `product` (`idProduct`, `name`, `description`, `price`, `stock`, `id
 (2, 'Jean Slim', 'Jean de qualité supérieure', 89.95, 25, 1, '2025-10-06 14:34:27', '2025-10-06 14:34:27'),
 (3, 'Smartphone Pro', 'Dernière génération', 799.99, 10, 2, '2025-10-06 14:34:27', '2025-10-06 14:34:27'),
 (4, 'Ordinateur Gaming', 'PC portable gaming', 1299.00, 5, 2, '2025-10-06 14:34:27', '2025-10-06 14:34:27'),
-(5, 'Canapé Scandinave', 'Design nordique', 549.99, 8, 3, '2025-10-06 14:34:27', '2025-10-06 14:34:27');
+(5, 'Canapé Scandinave', 'Design nordique', 549.99, 8, 3, '2025-10-06 14:34:27', '2025-10-06 14:34:27'),
+(6, 'Chaussures Running Pro', 'Chaussures de course haute performance avec semelle amortissante', 129.99, 15, 4, '2025-10-07 12:05:41', '2025-10-07 12:05:41'),
+(7, 'Écouteurs Bluetooth Elite', 'Écouteurs sans fil avec réduction de bruit active et autonomie 24h', 159.00, 30, 2, '2025-10-07 12:05:41', '2025-10-07 12:05:41'),
+(8, 'Lampe LED Design', 'Lampe de bureau moderne avec intensité réglable et port USB', 79.90, 20, 3, '2025-10-07 12:05:41', '2025-10-07 12:05:41');
 
 --
 -- Index pour les tables déchargées
@@ -108,7 +111,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT pour la table `product`
 --
 ALTER TABLE `product`
-  MODIFY `idProduct` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idProduct` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Contraintes pour les tables déchargées

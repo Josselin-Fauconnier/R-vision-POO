@@ -13,15 +13,15 @@ class Product
     private DateTime $updatedAt;
 
     public function __construct(
-        int $id, 
-        string $name, 
-        array $photos, 
-        int $price, 
-        string $description, 
-        int $quantity,
-        int $catagory_id, 
-        DateTime $createdAt, 
-        DateTime $updatedAt
+        int $id = 0, 
+        string $name= '', 
+        array $photos = [], 
+        int $price = 0, 
+        string $description  = '', 
+        int $quantity = 0,
+        int $catagory_id =0, 
+        DateTime|null $createdAt = null, 
+        DateTime|null $updatedAt = null
     ) {
         $this->id = $id;
         $this->name = $name;
@@ -29,8 +29,8 @@ class Product
         $this->price = $price;
         $this->description = $description;
         $this->quantity = $quantity;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
+        $this->createdAt = $createdAt ?? new DateTime();
+        $this->updatedAt = $updatedAt ?? new DateTime();
     }
 
 
@@ -67,6 +67,12 @@ class Product
         return $this->quantity;
     }
 
+
+    public function getCategoryId() : int {
+        return $this->category_id;
+    }
+
+
     public function getCreatedAt(): DateTime 
     {
         return $this->createdAt;
@@ -76,6 +82,8 @@ class Product
     {
         return $this->updatedAt;
     }
+    
+
 
     
     
@@ -116,6 +124,11 @@ class Product
         }
         $this->quantity = $quantity;
     }
+    
+    public function setCategoryId(int $category_id) : void {
+        $this->category_id = $category_id;
+    }
+
 
     public function setCreatedAt(DateTime $createdAt): void 
     {
@@ -141,17 +154,17 @@ class Category {
     private Datetime $updatedAt;
 
     public function __construct (
-        int $id,
-        string $name,
-        string $description,
-        DateTime $createdAt,
-        DateTime $updatedAt,
+        int $id = 0,
+        string $name = '',
+        string $description = '',
+        DateTime|null  $createdAt = null,
+        DateTime|null $updatedAt = null,
     ){
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
+        $this->createdAt = $createdAt ?? new DateTime ();
+        $this->updatedAt = $updatedAt ?? new DateTime ();
     }
 
     // Getters for Category class

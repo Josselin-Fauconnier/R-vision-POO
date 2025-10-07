@@ -12,14 +12,14 @@ class Product
     private DateTime $updatedAt;
 
     public function __construct(
-        int $id, 
-        string $name, 
-        array $photos, 
-        int $price, 
-        string $description, 
-        int $quantity, 
-        DateTime $createdAt, 
-        DateTime $updatedAt
+        int $id = 0, 
+        string $name = '', 
+        array $photos = [], 
+        int $price = 0, 
+        string $description = '', 
+        int $quantity = 0, 
+        DateTime|null $createdAt = null, 
+        DateTime|null $updatedAt = null
     ) {
         $this->id = $id;
         $this->name = $name;
@@ -27,8 +27,8 @@ class Product
         $this->price = $price;
         $this->description = $description;
         $this->quantity = $quantity;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
+        $this->createdAt = $createdAt ?? new DateTime();
+        $this->updatedAt = $updatedAt ?? new DateTime();
     }
 
 
