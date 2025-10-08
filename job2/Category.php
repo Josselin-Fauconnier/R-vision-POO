@@ -19,7 +19,7 @@ class Product
         int $price = 0, 
         string $description  = '', 
         int $quantity = 0,
-        int $catagory_id =0, 
+        int $category_id =0, 
         DateTime|null $createdAt = null, 
         DateTime|null $updatedAt = null
     ) {

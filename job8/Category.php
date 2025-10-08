@@ -132,12 +132,125 @@ class Product
     {
         $this->updatedAt = $updatedAt;
     }
-
-
+   
+     // Job7
     
 
 
+       public function findOneById(int $id): Product|false 
+    {
+        
+        if ($id <= 0) {
+            throw new InvalidArgumentException("L'ID doit être un entier positif");
+        }
+
+        try {
+            $pdo = getDatabaseConnection();
+
+            
+            $stmt = $pdo->prepare("
+                SELECT idProduct, name, description, price, stock, idCategory, createdAt, updatedAt
+                FROM product
+                WHERE idProduct = :id
+                LIMIT 1
+            ");
+
+            $stmt->execute(['id' => $id]);
+            $productData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($productData) {
+                
+                $this->setId($productData['idProduct']);
+                $this->setName($productData['name']);
+                $this->setPhotos([]); 
+                $this->setPrice((float)$productData['price']);
+                $this->setDescription($productData['description']);
+                $this->setQuantity($productData['stock']);
+                $this->setCategoryId($productData['idCategory']);
+                $this->setCreatedAt(new DateTime($productData['createdAt']));
+                $this->setUpdatedAt(new DateTime($productData['updatedAt']));
+                
+                return $this; 
+            } else {
+                return false;
+            }
+
+        } catch (PDOException $e) {
+            error_log("Erreur base de données dans findOneById(): " . $e->getMessage());
+            return false;
+        } catch (Exception $e) {
+            error_log("Erreur inattendue dans findOneById(): " . $e->getMessage());
+            return false;
+        }
+    }
+
+
+    // Job 8
+
+   public function findAll(): array 
+    {
+        $products = [];
+
+        try {
+            // Connexion à la base
+            $pdo = getDatabaseConnection();
+            
+            // IMPORTANT: Utiliser les VRAIS noms de colonnes de votre base
+            // Selon votre diagnostic: idProduct, name, description, price, stock, idCategory, createdAt, updatedAt
+            $stmt = $pdo->prepare("
+                SELECT idProduct, name, description, price, stock, idCategory, createdAt, updatedAt
+                FROM product
+                ORDER BY idProduct ASC
+            ");
+
+            $stmt->execute();
+            $productsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Debug pour vérifier la récupération
+            error_log("findAll() - Nombre de lignes récupérées: " . count($productsData));
+
+            foreach ($productsData as $productData) {
+                // Gestion des dates - vérifier le format dans votre base
+                $createdAt = new DateTime($productData['createdAt']);
+                $updatedAt = new DateTime($productData['updatedAt']);
+                
+                $product = new Product(
+                    (int)$productData['idProduct'],        // Attention: idProduct pas id
+                    $productData['name'],
+                    [],                                     // photos vide par défaut
+                    (float)$productData['price'],
+                    $productData['description'] ?? '',      // Protection contre NULL
+                    (int)$productData['stock'],             // Attention: stock pas quantity
+                    (int)$productData['idCategory'],        // Attention: idCategory pas category_id
+                    $createdAt,
+                    $updatedAt
+                );
+                
+                $products[] = $product;
+                
+                // Debug optionnel
+                error_log("Produit créé: " . $product->getName() . " (ID: " . $product->getId() . ")");
+            }
+
+            error_log("findAll() - Nombre de produits créés: " . count($products));
+
+        } catch (PDOException $e) {
+            error_log("Erreur PDO dans findAll(): " . $e->getMessage());
+            return [];
+        } catch (Exception $e) {
+            error_log("Erreur générale dans findAll(): " . $e->getMessage());
+            return [];
+        }
+
+        return $products;
+    }
+
+
 }
+
+
+
+
 
 
 
@@ -218,10 +331,6 @@ class Category
         $this->updatedAt = $updatedAt;
     }
 
-
-
-    // Method to get products in this category 
-   
     public function getProducts(): array 
     {
         $products = [];

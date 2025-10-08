@@ -132,12 +132,68 @@ class Product
     {
         $this->updatedAt = $updatedAt;
     }
-
-
+   
+     // Job7
     
 
 
+       public function findOneById(int $id): Product|false 
+    {
+        
+        if ($id <= 0) {
+            throw new InvalidArgumentException("L'ID doit être un entier positif");
+        }
+
+        try {
+            $pdo = getDatabaseConnection();
+
+            
+            $stmt = $pdo->prepare("
+                SELECT idProduct, name, description, price, stock, idCategory, createdAt, updatedAt
+                FROM product
+                WHERE idProduct = :id
+                LIMIT 1
+            ");
+
+            $stmt->execute(['id' => $id]);
+            $productData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($productData) {
+                
+                $this->setId($productData['idProduct']);
+                $this->setName($productData['name']);
+                $this->setPhotos([]); 
+                $this->setPrice((float)$productData['price']);
+                $this->setDescription($productData['description']);
+                $this->setQuantity($productData['stock']);
+                $this->setCategoryId($productData['idCategory']);
+                $this->setCreatedAt(new DateTime($productData['createdAt']));
+                $this->setUpdatedAt(new DateTime($productData['updatedAt']));
+                
+                return $this; 
+            } else {
+                return false;
+            }
+
+        } catch (PDOException $e) {
+            error_log("Erreur base de données dans findOneById(): " . $e->getMessage());
+            return false;
+        } catch (Exception $e) {
+            error_log("Erreur inattendue dans findOneById(): " . $e->getMessage());
+            return false;
+        }
+    }
+
+
+
+
+
+
 }
+
+
+
+
 
 
 
@@ -218,10 +274,6 @@ class Category
         $this->updatedAt = $updatedAt;
     }
 
-
-
-    // Method to get products in this category 
-   
     public function getProducts(): array 
     {
         $products = [];

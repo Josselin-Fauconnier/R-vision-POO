@@ -5,7 +5,7 @@ class Product
     private int $id;
     private string $name;
     private array $photos;
-    private int $price;
+    private float $price;
     private string $description;
     private int $quantity;
     private int $category_id;
@@ -16,10 +16,10 @@ class Product
         int $id = 0, 
         string $name= '', 
         array $photos = [], 
-        int $price = 0, 
+        float $price = 0, 
         string $description  = '', 
         int $quantity = 0,
-        int $catagory_id =0, 
+        int $category_id =0, 
         DateTime|null $createdAt = null, 
         DateTime|null $updatedAt = null
     ) {
@@ -29,6 +29,7 @@ class Product
         $this->price = $price;
         $this->description = $description;
         $this->quantity = $quantity;
+        $this->category_id = $category_id;
         $this->createdAt = $createdAt ?? new DateTime();
         $this->updatedAt = $updatedAt ?? new DateTime();
     }
@@ -52,7 +53,7 @@ class Product
         return $this->photos;
     }
 
-    public function getPrice(): int 
+    public function getPrice(): float
     {
         return $this->price;
     }
@@ -104,7 +105,7 @@ class Product
         $this->photos = $photos;
     }
 
-    public function setPrice(int $price): void 
+    public function setPrice(float $price): void 
     {
         if ($price < 0) {
             throw new InvalidArgumentException("Le prix ne peut pas être négatif");
