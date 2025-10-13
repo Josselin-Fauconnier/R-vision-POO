@@ -1,0 +1,17 @@
+{
+    "name": "fauco/rvisionpoo",
+    "description": "Exercercies de révision POO",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Fauco\\Rvisionpoo\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Josselin-Fauconnier",
+            "email": "josselin.fauconnier@laplateforme.io"
+        }
+    ],
+    "require": {}
+}
